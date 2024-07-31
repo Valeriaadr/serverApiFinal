@@ -13,7 +13,6 @@ router.post('/create-account', async (req, res) => {
     const lastAdmin = await Admin.findOne().sort({ id: -1 });
     const newAdminId = lastAdmin ? lastAdmin.id + 1 : 1;
 
-    // Crear nuevo administrador
     const newAdmin = new Admin({
       id: newAdminId,
       nombre: name,
@@ -24,7 +23,6 @@ router.post('/create-account', async (req, res) => {
 
     await newAdmin.save();
 
-    // Crear nuevo zoológico
     const newZoo = new Zoo({
       id: newAdminId,
       nombre: nameZoo,
@@ -78,9 +76,8 @@ router.post('/login', async (req, res) => {
         address: zoo.direccion
       };
 
-      // Almacenar adminId en sessionStorage
       if (!isMobileApp) {
-        res.cookie('adminId', admin.id, { httpOnly: true }); // Almacenar el ID en una cookie para acceder desde el front-end
+        res.cookie('adminId', admin.id, { httpOnly: true });
       }
 
       if (isMobileApp) {
@@ -96,9 +93,8 @@ router.post('/login', async (req, res) => {
   }
 });
 
-
 // Obtener información de admin por ID
-router.get('/api/admin/:id', async (req, res) => {
+router.get('/:id', async (req, res) => {
   try {
     const adminId = req.params.id;
     const admin = await Admin.findOne({ id: adminId });
@@ -123,31 +119,26 @@ router.get('/api/admin/:id', async (req, res) => {
   }
 });
 
-
 // Eliminar cuenta de admin, zoo, animales y empleados
 router.delete('/:id', async (req, res) => {
   try {
     const adminId = req.params.id;
 
-    // Eliminar zoo asociado
     const zooDeleted = await Zoo.findOneAndDelete({ admin_id: adminId });
     if (!zooDeleted) {
       return res.status(404).json({ message: 'Zoo no encontrado' });
     }
 
-    // Eliminar animales asociados al zoo
     const animalsDeleted = await Animal.deleteMany({ zona: zooDeleted.nombre });
     if (animalsDeleted.deletedCount === 0) {
       return res.status(404).json({ message: 'Animales no encontrados' });
     }
 
-    // Eliminar empleados asociados al zoo
     const employeesDeleted = await Empleado.deleteMany({ zoo_name: zooDeleted.nombre });
     if (employeesDeleted.deletedCount === 0) {
       return res.status(404).json({ message: 'Empleados no encontrados' });
     }
 
-    // Eliminar admin
     const adminDeleted = await Admin.findByIdAndDelete(adminId);
     if (!adminDeleted) {
       return res.status(404).json({ message: 'Admin no encontrado' });
@@ -158,6 +149,5 @@ router.delete('/:id', async (req, res) => {
     res.status(500).json({ message: 'Error al eliminar la cuenta', error });
   }
 });
-
 
 module.exports = router;

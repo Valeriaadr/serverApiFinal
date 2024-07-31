@@ -28,11 +28,6 @@ app.use((req, res, next) => {
   next();
 });
 
-// Configura el middleware
-app.use(bodyParser.urlencoded({ extended: true }));
-app.use(bodyParser.json());
-app.use(express.static(path.join(__dirname, 'public')));
-
 // Configura las sesiones
 app.use(session({
   secret: 'yourSecretKey',
