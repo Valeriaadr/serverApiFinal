@@ -20,7 +20,7 @@ app.use(express.json());
 
 // Configurar CORS para permitir solicitudes desde los orígenes especificados
 app.use(cors({
-  origin: ['http://localhost:8081', 'http://localhost:8080'], // Permite solicitudes desde estos orígenes
+  origin: ['http://localhost:8081', 'http://localhost:8080', 'https://serverapifinal.onrender.com'],
   methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE'],
   allowedHeaders: ['Origin', 'X-Requested-With', 'Content-Type', 'Accept', 'Authorization']
 }));
