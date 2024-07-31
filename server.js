@@ -29,19 +29,10 @@ app.use(session({
 }));
 
 // Conecta a la base de datos MongoDB
-mongoose.connect('mongodb+srv://Valeriaadr:vale123@cluster0.mt5djqw.mongodb.net/ZooSmart', {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-  autoIndex: false
-});
-
-mongoose.connection.on('open', () => {
-  console.log('Conectado a la base de datos MongoDB');
-});
-
-mongoose.connection.on('error', (err) => {
-  console.log('Error al conectar a la base de datos MongoDB:', err);
-});
+mongoose
+  .connect('mongodb+srv://Valeriaadr:vale123@cluster0.mt5djqw.mongodb.net/ZooSmart')
+  .then(() => console.log("Conexcion satisfactoria"))
+  .catch((error) => console.error(error))
 
 // Rutas
 app.use('/api/admin', adminRoutes);
@@ -91,5 +82,5 @@ cron.schedule('0 0 * * *', async () => {
 });
 
 app.listen(port, () => {
-  console.log(`Servidor ejecutándose en http://localhost:${port}`);
+  console.log(`Servidor funcionando`);
 });
