@@ -9,10 +9,24 @@ const adminRoutes = require('./routes/adminRoutes');
 const zooRoutes = require('./routes/ZooRoutes');
 const empleadoRoutes = require('./routes/empleadoRoutes');
 const animalRoutes = require('./routes/animalRoutes');
-const testRoutes = require('./routes/testRoutes'); // pruebas api
+const testRoutes = require('./routes/testRoutes'); // pruebas APIII
 
 const app = express();
 const port = 3001;
+
+// Middleware para parsear JSON
+app.use(express.json());
+
+// Configurar CORS
+app.use((req, res, next) => {
+  res.header('Access-Control-Allow-Origin', '*');
+  res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, Authorization');
+  if (req.method === 'OPTIONS') {
+    res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, PATCH, DELETE');
+    return res.status(200).json({});
+  }
+  next();
+});
 
 // Configura el middleware
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -82,9 +96,9 @@ cron.schedule('0 0 * * *', async () => {
       await animal.save();
     }
 
-    console.log('Ages updated successfully');
+    console.log('Edades actualizadas correctamente');
   } catch (error) {
-    console.error('Error updating ages:', error);
+    console.error('Error actualizando edades:', error);
   }
 });
 
