@@ -152,7 +152,7 @@ const calcularEdadDetallada = (fechaNacimiento) => {
   return { años, meses, dias };
 };
 
-//API funcionesssssss
+// API funciones
 
 // Obtener animales por zoológico y zona (no requiere autenticación)
 router.get('/byZone/:zona', async (req, res) => {
@@ -166,7 +166,7 @@ router.get('/byZone/:zona', async (req, res) => {
   }
 });
 
-// Nuevo endpoint para obtener un animal por ID numérico
+//OBTENER ANIMALES ID NUMERICO
 router.get('/byId/:id', async (req, res) => {
   try {
     const animalId = parseInt(req.params.id, 10);
@@ -185,6 +185,7 @@ router.get('/byId/:id', async (req, res) => {
     res.status(500).json({ message: 'Error al obtener el animal', error });
   }
 });
+
 
 // Convertir un ID numérico a ObjectId
 const findObjectIdByNumericId = async (numericId) => {
