@@ -4,13 +4,13 @@ const path = require('path');
 const bodyParser = require('body-parser');
 const session = require('express-session');
 const cron = require('node-cron');
-const cors = require('cors'); // Importa el paquete cors
+const cors = require('cors');
 
 const adminRoutes = require('./routes/adminRoutes');
 const zooRoutes = require('./routes/ZooRoutes');
 const empleadoRoutes = require('./routes/empleadoRoutes');
 const animalRoutes = require('./routes/animalRoutes');
-const testRoutes = require('./routes/testRoutes'); // pruebas APIII
+const testRoutes = require('./routes/testRoutes');
 
 const app = express();
 const port = 3001;
@@ -18,9 +18,9 @@ const port = 3001;
 // Middleware para parsear JSON
 app.use(express.json());
 
-// Configurar CORS para permitir solicitudes desde cualquier origen
+// Configurar CORS para permitir solicitudes desde los orígenes especificados
 app.use(cors({
-  origin: 'http://localhost:8081', // Permite solicitudes desde cualquier origen
+  origin: ['http://localhost:8081', 'http://localhost:8080'], // Permite solicitudes desde estos orígenes
   methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE'],
   allowedHeaders: ['Origin', 'X-Requested-With', 'Content-Type', 'Accept', 'Authorization']
 }));
