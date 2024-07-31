@@ -15,15 +15,15 @@ const testRoutes = require('./routes/testRoutes');
 const app = express();
 const port = 3001;
 
-// Middleware para parsear JSON
-app.use(express.json());
-
 // Configurar CORS para permitir solicitudes desde los orígenes especificados
 app.use(cors({
   origin: '*',
   methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE'],
   allowedHeaders: ['Origin', 'X-Requested-With', 'Content-Type', 'Accept', 'Authorization']
 }));
+
+// Middleware para parsear JSON
+app.use(express.json());
 
 
 // Configura las sesiones
